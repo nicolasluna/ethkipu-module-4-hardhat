@@ -1,0 +1,57 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 320px;
+  text-align: center;
+}
+
+input[type="number"] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  background-color: #2d89ef;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e6fd9;
+}
+
+#status {
+  margin-top: 15px;
+  color: #333;
+}
+
+.wallet-section {
+  margin-bottom: 20px;
+}
+
+.balance {
+  font-size: 0.9em;
+  color: #888;
+  margin-left: 4px;
+}
+
