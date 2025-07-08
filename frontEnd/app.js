@@ -58,7 +58,7 @@ swapButton.onclick = async () => {
 
   const userAddress = await signer.getAddress();
   const amountInWei = ethers.utils.parseUnits(amountIn, 18);
-  const amountOutMin = 0; // TODO: test with different values
+  const amountOutMin = 1; // TODO: test with different values
   const deadline = Math.floor(Date.now() / 1000) + 300; // +5 minutes
 
   const tokenAContract = new ethers.Contract(TOKEN_A_ADDRESS, [
