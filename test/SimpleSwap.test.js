@@ -105,6 +105,33 @@ describe("SimpleSwap", function () {
     expect(lpBalance).to.equal(totalSupply);
   });
 
+  // add new liquidity with initial reserves > 0
+  it("should allow adding liquidity with different amounts", async function () {
+    const initialReserveA = await swap.reserveA();
+    const initialReserveB = await swap.reserveB();
+
+    const amountA = ethers.parseUnits("50", 18);
+    const amountB = ethers.parseUnits("100", 18);
+    const deadline = Math.floor(Date.now() / 1000) + 300;
+
+    await swap.addLiquidity(
+      await tokenA.getAddress(),
+      await tokenB.getAddress(),
+      amountA,
+      amountB,
+      10,
+      10,
+      owner.address,
+      deadline
+    );
+
+    const newReserveA = await swap.reserveA();
+    const newReserveB = await swap.reserveB();
+
+    expect(newReserveA).to.equal(initialReserveA + amountA);
+    expect(newReserveB).to.equal(initialReserveB + amountB);
+  });
+
   it("test getters", async function () {
     // tokenA y tokenB son públicos → generan getters
     expect(await swap.tokenA()).to.equal(await tokenA.getAddress());
@@ -127,31 +154,29 @@ describe("SimpleSwap", function () {
     expect(lpBalance).to.equal(supply);
   });
 
-  //TODO: pending remove liquidity test
-    it("should allow removing liquidity", async function () {
-        const initialBalanceA = await tokenA.balanceOf(owner.address);
-        const initialBalanceB = await tokenB.balanceOf(owner.address);
-    
-        const lpBalance = await swap.balanceOf(owner.address);
-        const halfLiquidity = ethers.toBigInt(lpBalance) / 2n;
-        const deadline = Math.floor(Date.now() / 1000) + 300;
-    
-        await swap.removeLiquidity(
-        await tokenA.getAddress(),
-        await tokenB.getAddress(),
-        halfLiquidity, // Retiramos la mitad de los LP tokens
-        0,
-        0,
-        owner.address,
-        deadline
-        );
-    
-        const finalBalanceA = await tokenA.balanceOf(owner.address);
-        const finalBalanceB = await tokenB.balanceOf(owner.address);
-    
-        expect(finalBalanceA).to.be.gt(initialBalanceA);
-        expect(finalBalanceB).to.be.gt(initialBalanceB);
-    });
-    
+  it("should allow removing liquidity", async function () {
+      const initialBalanceA = await tokenA.balanceOf(owner.address);
+      const initialBalanceB = await tokenB.balanceOf(owner.address);
   
+      const lpBalance = await swap.balanceOf(owner.address);
+      const halfLiquidity = ethers.toBigInt(lpBalance) / 2n;
+      const deadline = Math.floor(Date.now() / 1000) + 300;
+  
+      await swap.removeLiquidity(
+      await tokenA.getAddress(),
+      await tokenB.getAddress(),
+      halfLiquidity, // Retiramos la mitad de los LP tokens
+      0,
+      0,
+      owner.address,
+      deadline
+      );
+  
+      const finalBalanceA = await tokenA.balanceOf(owner.address);
+      const finalBalanceB = await tokenB.balanceOf(owner.address);
+  
+      expect(finalBalanceA).to.be.gt(initialBalanceA);
+      expect(finalBalanceB).to.be.gt(initialBalanceB);
+  });
+    
 });

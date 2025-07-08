@@ -1,14 +1,16 @@
+// html element references
 const tokenAInput = document.getElementById("tokenA");
-const tokenBInput = document.getElementById("tokenB"); // opcional para estimación
+const tokenBInput = document.getElementById("tokenB");
 const status = document.getElementById("status");
 const connectWalletBtn = document.getElementById("connectWallet");
 const balanceASpan = document.getElementById("balanceA");
 const balanceBSpan = document.getElementById("balanceB");
 
-const TOKEN_A_ADDRESS = "0xd1cDD903d12f3121Ff485816bD75eb578A0c46B8"; // 🟡 Cambiar por tu Token A
-const TOKEN_B_ADDRESS = "0x8bA5C03c115333286aBC11A74a917146acFB790A"; // 🟡 Cambiar por tu Token B
-const SWAP_CONTRACT_ADDRESS = "0xF81AeaA87956CC4f7bf0CA39EEd3D28143E7EA31"; // 🟡 Dirección de tu contrato SimpleSwap
-const ABI = [ // 🔵 Fragmento del ABI necesario
+const TOKEN_A_ADDRESS = "0xd1cDD903d12f3121Ff485816bD75eb578A0c46B8";
+const TOKEN_B_ADDRESS = "0x8bA5C03c115333286aBC11A74a917146acFB790A";
+const SWAP_CONTRACT_ADDRESS = "0xF81AeaA87956CC4f7bf0CA39EEd3D28143E7EA31";
+// abi for the swap contract
+const ABI = [
   "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
   "function getPrice(address _tokenA, address _tokenB) external view returns (uint price)",
   "function balanceOf(address owner) view returns (uint256)",
@@ -33,7 +35,7 @@ connectWalletBtn.onclick = async () => {
   await updateBalances(address);
 };
 
-// 🟡 Estimación de Token B al cambiar el input de Token A
+// TODO: review this method to estimate tokenB based on input for tokenA
 tokenAInput.addEventListener("input", async () => {
   const amountA = tokenAInput.value;
   if (!swapContract || !amountA || isNaN(amountA)) return;
@@ -55,9 +57,9 @@ swapButton.onclick = async () => {
   }
 
   const userAddress = await signer.getAddress();
-  const amountInWei = ethers.utils.parseUnits(amountIn, 18); // Asumiendo 18 decimales
-  const amountOutMin = 1; // 🟢 Podés ajustar esto según tolerancia al deslizamiento
-  const deadline = Math.floor(Date.now() / 1000) + 300; // +5 minutos
+  const amountInWei = ethers.utils.parseUnits(amountIn, 18);
+  const amountOutMin = 0; // TODO: test with different values
+  const deadline = Math.floor(Date.now() / 1000) + 300; // +5 minutes
 
   const tokenAContract = new ethers.Contract(TOKEN_A_ADDRESS, [
     "function approve(address spender, uint amount) public returns (bool)",
@@ -85,7 +87,7 @@ swapButton.onclick = async () => {
   }
 };
 
-// new balance
+// show wallet balances
 async function updateBalances(userAddress) {
     try {
       const tokenA = new ethers.Contract(TOKEN_A_ADDRESS, ABI, provider);
