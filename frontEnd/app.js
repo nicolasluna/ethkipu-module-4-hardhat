@@ -114,6 +114,8 @@ async function updateBalances(userAddress) {
     }
   }
 
+
+  /*
 let isReversed = false;
 
 //switch tokens button functionality
@@ -141,4 +143,6 @@ document.getElementById("switchTokens").addEventListener("click", () => {
   inputA.value = inputB.value;
   inputB.value = tempVal;
 });
+
+*/
 
