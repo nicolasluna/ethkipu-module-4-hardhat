@@ -8,7 +8,8 @@ const balanceBSpan = document.getElementById("balanceB");
 
 const TOKEN_A_ADDRESS = "0xd1cDD903d12f3121Ff485816bD75eb578A0c46B8";
 const TOKEN_B_ADDRESS = "0x8bA5C03c115333286aBC11A74a917146acFB790A";
-const SWAP_CONTRACT_ADDRESS = "0xF81AeaA87956CC4f7bf0CA39EEd3D28143E7EA31";
+// const SWAP_CONTRACT_ADDRESS_backup = "0xF81AeaA87956CC4f7bf0CA39EEd3D28143E7EA31";
+const SWAP_CONTRACT_ADDRESS = "0x67a051559e8E81CACD69E386505F28b9acFeE4E4";
 // abi for the swap contract
 const ABI = [
   "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
