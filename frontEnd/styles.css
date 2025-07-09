@@ -55,3 +55,15 @@ button:hover {
   margin-left: 4px;
 }
 
+.switch-button {
+  margin: 10px auto;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  display: block;
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+}
+
+

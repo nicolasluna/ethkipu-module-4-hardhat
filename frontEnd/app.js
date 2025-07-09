@@ -113,3 +113,32 @@ async function updateBalances(userAddress) {
       console.error("Error fetching balances:", err);
     }
   }
+
+let isReversed = false;
+
+//switch tokens button functionality
+document.getElementById("switchTokens").addEventListener("click", () => {
+  isReversed = !isReversed;
+
+  // Swap labels
+  const labelA = document.querySelector("label[for='tokenA']");
+  const labelB = document.querySelector("label[for='tokenB']");
+  const tempLabel = labelA.textContent;
+  labelA.textContent = labelB.textContent;
+  labelB.textContent = tempLabel;
+
+  // Swap balances
+  const balanceA = document.getElementById("balanceA");
+  const balanceB = document.getElementById("balanceB");
+  const tempBalance = balanceA.textContent;
+  balanceA.textContent = balanceB.textContent;
+  balanceB.textContent = tempBalance;
+
+  // Swap values (optional)
+  const inputA = document.getElementById("tokenA");
+  const inputB = document.getElementById("tokenB");
+  const tempVal = inputA.value;
+  inputA.value = inputB.value;
+  inputB.value = tempVal;
+});
+
