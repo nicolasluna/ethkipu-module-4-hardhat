@@ -66,4 +66,13 @@ button:hover {
   border-radius: 5px;
 }
 
+#walletAddress {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.9em;
+  color: #333;
+  word-break: break-all;
+}
 

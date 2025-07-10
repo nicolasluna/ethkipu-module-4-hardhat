@@ -106,7 +106,7 @@ describe("SimpleSwap", function () {
   });
 
   // add new liquidity with initial reserves > 0
-  it("should allow adding liquidity with different amounts", async function () {
+  it("should allow adding liquidity with previuos total supply > 0", async function () {
     const initialReserveA = await swap.reserveA();
     const initialReserveB = await swap.reserveB();
 
@@ -132,24 +132,24 @@ describe("SimpleSwap", function () {
     expect(newReserveB).to.equal(initialReserveB + amountB);
   });
 
-  it("test getters", async function () {
-    // tokenA y tokenB son públicos → generan getters
+  it("should test public getters", async function () {
+    // tokenA and tokenB
     expect(await swap.tokenA()).to.equal(await tokenA.getAddress());
     expect(await swap.tokenB()).to.equal(await tokenB.getAddress());
 
-    // reserveA y reserveB también son públicos
+    // reserves
     const reserveA = await swap.reserveA();
     const reserveB = await swap.reserveB();
 
-    // Comprobamos que las reservas sean mayores a cero (después de addLiquidity)
+    // test reserves
     expect(reserveA).to.equal(ethers.parseUnits("100", 18));
     expect(reserveB).to.equal(ethers.parseUnits("200", 18));
 
-    // totalSupply es heredado de ERC20 (LP token) y también es público
+    // totalSupply getter
     const supply = await swap.totalSupply();
     expect(supply).to.be.gt(0);
 
-    // balanceOf también es heredado de ERC20 y cuenta como getter
+    // balanceOf
     const lpBalance = await swap.balanceOf(owner.address);
     expect(lpBalance).to.equal(supply);
   });
@@ -165,7 +165,7 @@ describe("SimpleSwap", function () {
       await swap.removeLiquidity(
       await tokenA.getAddress(),
       await tokenB.getAddress(),
-      halfLiquidity, // Retiramos la mitad de los LP tokens
+      halfLiquidity,
       0,
       0,
       owner.address,
